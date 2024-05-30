@@ -1,16 +1,16 @@
 {
-	"profiles": {
-		"Terraria": {
-			"commandName": "Executable",
-			"executablePath": "$(DotNetName)",
-			"commandLineArgs": "$(tMLPath)",
-			"workingDirectory": "$(tMLSteamPath)"
-		},
-		"TerrariaServer": {
-			"commandName": "Executable",
-			"executablePath": "$(DotNetName)",
-			"commandLineArgs": "$(tMLServerPath)",
-			"workingDirectory": "$(tMLSteamPath)"
-		}
-	}
+  "profiles": {
+    "Terraria": {
+      "commandName": "Executable",
+      "executablePath": "$(DotNetName)",
+      "commandLineArgs": "$(tMLPath) -skipselect \"tester:test\"",
+      "workingDirectory": "$(tMLSteamPath)"
+    },
+    "TerrariaServer": {
+      "commandName": "Executable",
+      "executablePath": "$(DotNetName)",
+      "commandLineArgs": "$(tMLServerPath) -world \"C:\\Users\\Owner\\Documents\\My Games\\Terraria\\tModLoader\\Worlds\\test.wld\" -port 7777 -players 16",
+      "workingDirectory": "$(tMLSteamPath)"
+    }
+  }
 }
