@@ -4,6 +4,7 @@ using Terraria.Chat;
 using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System.Linq;
+using System;
 
 //this is my own libary that I use to store snipits. I don't want it to be it's own mod, so I'll use copy and paste this file when needed.
 namespace RainRandomEnemies
@@ -15,6 +16,10 @@ namespace RainRandomEnemies
             NPCID.SkeletronHand, NPCID.WallofFleshEye, NPCID.TheDestroyer, NPCID.TheDestroyerBody, NPCID.TheDestroyerTail, NPCID.PrimeCannon, NPCID.PrimeLaser, NPCID.PrimeSaw, NPCID.PrimeVice, NPCID.PlanterasHook, NPCID.PlanterasTentacle, 
             NPCID.GolemFistLeft, NPCID.GolemFistRight, NPCID.GolemHead, NPCID.GolemHeadFree, NPCID.CultistBossClone, NPCID.MoonLordCore, 
             NPCID.MoonLordHand, NPCID.MoonLordHead, NPCID.MoonLordFreeEye, NPCID.MoonLordLeechBlob };
+
+        public static int[] MiniBosses = {NPCID.DD2DarkMageT1, NPCID.DD2DarkMageT3, NPCID.DD2OgreT2, NPCID.DD2OgreT3, NPCID.DD2Betsy,
+            NPCID.PirateShip, NPCID.MourningWood, NPCID.Pumpking, NPCID.Everscream, NPCID.SantaNK1, NPCID.IceQueen, NPCID.MartianSaucer, 
+            NPCID.CultistBoss, NPCID.LunarTowerSolar, NPCID.LunarTowerVortex, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust};
 
         public class Slimes
         {
