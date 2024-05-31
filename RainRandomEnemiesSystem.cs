@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace RainRandomEnemies
 {
@@ -67,7 +66,6 @@ namespace RainRandomEnemies
                             if (npc.type == boss) {
                                 ffFunc.Talk("The " + npc.FullName + " isnt the type of person to spawn in during this event", Color.Orange);
                                 npc.active = false;
-
                             }
                         }
 
