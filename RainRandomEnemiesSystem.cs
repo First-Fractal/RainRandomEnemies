@@ -47,41 +47,51 @@ namespace RainRandomEnemies
         //function to spawn in a random enemy on every player
         void SummonRandomEnemy()
         {
+            //go through every player
             for (int i = 0; i < Main.player.Length; i++)
             {
+                //check if the player is active and not dead
                 Player player = Main.player[i];
                 if (player.active && !player.dead)
                 {
-                    int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(),
-                    (int)player.position.X + Main.rand.Next(-50, 50),
-                    (int)player.position.Y + Main.rand.Next(-50, 50),
-                    Main.rand.Next(-65, NPCID.Count));
+                    //get ready to get an enemy pool
+                    int[] enemyPool = null;
 
-                    NPC npc = Main.npc[npcID];
+                    //the start of the progression
+                    //get the day time pool if day time, and night time pool if night time
+                    if (Main.dayTime) enemyPool = RainRandomEnemiesProgression.StartEnemies;
+                    else enemyPool = RainRandomEnemiesProgression.StartNightEnemies;
 
-                    if (npc.friendly || npc.boss || npc.townNPC)
+                    //post evil boss
+                    if (NPC.downedBoss2)
                     {
-                        foreach (int boss in ffVar.BossParts)
-                        {
-                            if (npc.type == boss) {
-                                ffFunc.Talk("The " + npc.FullName + " isnt the type of person to spawn in during this event", Color.Orange);
-                                npc.active = false;
-                            }
-                        }
-
-                        foreach (int boss in ffVar.MiniBosses)
-                        {
-                            if (npc.type == boss)
-                            {
-                                ffFunc.Talk("The " + npc.FullName + " isnt the type of person to spawn in during this event", Color.Orange);
-                                npc.active = false;
-                            }
-                        }
-
-                        ffFunc.Talk("The " + npc.FullName + " isnt the type of person to spawn in during this event", Color.Orange);
-                        npc.active = false;
-
+                        //get the day time pool if day time, and night time pool if night time
+                        if (Main.dayTime) enemyPool = RainRandomEnemiesProgression.PostEvilBossEnemies;
+                        else enemyPool = RainRandomEnemiesProgression.PostEvilBossNightEnemies;
+                    } 
+                    //hardmode
+                    if (Main.hardMode)
+                    {
+                        //get the day time pool if day time, and night time pool if night time
+                        if (Main.dayTime) enemyPool = RainRandomEnemiesProgression.HardmodeEnemies;
+                        else enemyPool = RainRandomEnemiesProgression.HardmodeNightEnemies;
+                    } 
+                    //post plantera
+                    if (NPC.downedPlantBoss)
+                    {
+                        //get the day time pool if day time, and night time pool if night time
+                        if (Main.dayTime) enemyPool = RainRandomEnemiesProgression.PostPlantEnemies;
+                        else enemyPool = RainRandomEnemiesProgression.PostPlantNightEnemies;
                     }
+
+                    //get an random enemy from the pool
+                    int enemy = enemyPool[Main.rand.Next(enemyPool.Length - 1)];
+
+                    //spaw the enemy above the player
+                    int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(),
+                    (int)player.position.X + Main.rand.Next(-250, 250),
+                    (int)player.position.Y - Main.rand.Next(700, 1200),
+                    enemy);
                 }
             }
         }
