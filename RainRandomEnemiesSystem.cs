@@ -44,6 +44,32 @@ namespace RainRandomEnemies
             }
         }
 
+        void DisableRREevent()
+        {
+            //cehck if the event is already going on
+            if (RREevent)
+            {
+                //set the event to be on
+                RREevent = false;
+
+                //reset the cooldown and tell the player about the end of the event
+                durationMax = ffFunc.TimeToTick(secs: Main.rand.Next(3, 8));
+                ffFunc.Talk(Language.GetTextValue("Mods.RainRandomEnemies.StatusMessage.End"), new Color(50, 255, 130));
+
+                //set the world to not be raining
+                Main.raining = false;
+                Main.rainTime = 0;
+                Main.maxRaining = Main.cloudAlpha = 0f;
+
+                //sync the rain with the world
+                if (Main.netMode == NetmodeID.Server)
+                {
+                    NetMessage.SendData(MessageID.WorldData);
+                    Main.SyncRain();
+                }
+            }
+        }
+
         //function to spawn in a random enemy on every player
         void SummonRandomEnemy()
         {
@@ -109,6 +135,7 @@ namespace RainRandomEnemies
                 else
                 {
                     ffFunc.CooldownSystem(ref spawnDelay, ref spawnDelayMax, SummonRandomEnemy);
+                    ffFunc.CooldownSystem(ref duration, ref durationMax, DisableRREevent);
                 }
             }
             base.PostUpdateEverything();

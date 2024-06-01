@@ -1,1 +1,4 @@
-StatusMessage.Start: It's currently raining enemies!
+StatusMessage: {
+	Start: It's currently raining enemies!
+	End: It stop raining enemies!
+}
