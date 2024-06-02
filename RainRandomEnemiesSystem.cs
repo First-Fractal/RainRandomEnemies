@@ -122,8 +122,11 @@ namespace RainRandomEnemies
 
                         while (!correctEnemy)
                         {
-                            //get a random enemy
-                            int enemy = Main.rand.Next(NPCID.Count - 1);
+                            //get a random npc including modded
+                            int enemy = Main.rand.Next(NPCLoader.NPCCount - 1);
+
+                            ////get a random modded enemy only
+                            //int enemy = Main.rand.Next(NPCID.Count, NPCLoader.NPCCount);
 
                             //spawn in the enemy from the sky while getting the id from him
                             int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(),
@@ -135,8 +138,12 @@ namespace RainRandomEnemies
                             NPC npc = Main.npc[npcID];
 
                             //check to see if the enemy isnt a boss, miniboss, critter, or a town npc, or else restart the loop
-                            if (!npc.boss && !npc.isLikeATownNPC && !npc.CountsAsACritter && !ffVar.BossParts.Contains(enemy) 
-                                && !ffVar.MiniBosses.Contains(enemy)) correctEnemy = true;
+                            if (!npc.boss && !npc.isLikeATownNPC && !npc.CountsAsACritter && !ffVar.BossParts.Contains(enemy)
+                                && !ffVar.MiniBosses.Contains(enemy))
+                            {
+                                correctEnemy = true;
+                                ffFunc.Talk(npc.FullName + " has just spawn in", Color.Orange);
+                            }
                             else npc.active = false;
                         }
                     } 
