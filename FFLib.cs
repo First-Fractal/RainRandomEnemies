@@ -19,7 +19,7 @@ namespace RainRandomEnemies
 
         public static int[] MiniBosses = {NPCID.BloodNautilus, NPCID.DD2DarkMageT1, NPCID.DD2DarkMageT3, NPCID.DD2OgreT2, NPCID.DD2OgreT3, NPCID.DD2Betsy,
             NPCID.PirateShip, NPCID.MourningWood, NPCID.Pumpking, NPCID.Everscream, NPCID.SantaNK1, NPCID.IceQueen, NPCID.MartianSaucer,
-            NPCID.CultistBoss, NPCID.LunarTowerSolar, NPCID.LunarTowerVortex, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust};
+            NPCID.LunarTowerSolar, NPCID.LunarTowerVortex, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust};
 
         public class Slimes
         {
