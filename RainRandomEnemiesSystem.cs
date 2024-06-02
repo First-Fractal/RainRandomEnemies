@@ -80,44 +80,48 @@ namespace RainRandomEnemies
                 Player player = Main.player[i];
                 if (player.active && !player.dead)
                 {
-                    //get ready to get an enemy pool
-                    int[] enemyPool = null;
-
-                    //the start of the progression
-                    //get the day time pool if day time, and night time pool if night time
-                    if (Main.dayTime) enemyPool = RainRandomEnemiesProgression.StartEnemies;
-                    else enemyPool = RainRandomEnemiesProgression.StartNightEnemies;
-
-                    //post evil boss
-                    if (NPC.downedBoss2)
+                    //check if the player is on the surface
+                    if (!player.ZoneDirtLayerHeight && !player.ZoneRockLayerHeight && !player.ZoneUnderworldHeight)
                     {
+                        //get ready to get an enemy pool
+                        int[] enemyPool = null;
+
+                        //the start of the progression
                         //get the day time pool if day time, and night time pool if night time
-                        if (Main.dayTime) enemyPool = RainRandomEnemiesProgression.PostEvilBossEnemies;
-                        else enemyPool = RainRandomEnemiesProgression.PostEvilBossNightEnemies;
+                        if (Main.dayTime) enemyPool = RainRandomEnemiesProgression.StartEnemies;
+                        else enemyPool = RainRandomEnemiesProgression.StartNightEnemies;
+
+                        //post evil boss
+                        if (NPC.downedBoss2)
+                        {
+                            //get the day time pool if day time, and night time pool if night time
+                            if (Main.dayTime) enemyPool = RainRandomEnemiesProgression.PostEvilBossEnemies;
+                            else enemyPool = RainRandomEnemiesProgression.PostEvilBossNightEnemies;
+                        }
+                        //hardmode
+                        if (Main.hardMode)
+                        {
+                            //get the day time pool if day time, and night time pool if night time
+                            if (Main.dayTime) enemyPool = RainRandomEnemiesProgression.HardmodeEnemies;
+                            else enemyPool = RainRandomEnemiesProgression.HardmodeNightEnemies;
+                        }
+                        //post plantera
+                        if (NPC.downedPlantBoss)
+                        {
+                            //get the day time pool if day time, and night time pool if night time
+                            if (Main.dayTime) enemyPool = RainRandomEnemiesProgression.PostPlantEnemies;
+                            else enemyPool = RainRandomEnemiesProgression.PostPlantNightEnemies;
+                        }
+
+                        //get an random enemy from the pool
+                        int enemy = enemyPool[Main.rand.Next(enemyPool.Length - 1)];
+
+                        //spaw the enemy in the sky
+                        int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(),
+                        (int)player.position.X + Main.rand.Next(-250, 250),
+                        (int)player.position.Y - Main.rand.Next(600, 900),
+                        enemy);
                     } 
-                    //hardmode
-                    if (Main.hardMode)
-                    {
-                        //get the day time pool if day time, and night time pool if night time
-                        if (Main.dayTime) enemyPool = RainRandomEnemiesProgression.HardmodeEnemies;
-                        else enemyPool = RainRandomEnemiesProgression.HardmodeNightEnemies;
-                    } 
-                    //post plantera
-                    if (NPC.downedPlantBoss)
-                    {
-                        //get the day time pool if day time, and night time pool if night time
-                        if (Main.dayTime) enemyPool = RainRandomEnemiesProgression.PostPlantEnemies;
-                        else enemyPool = RainRandomEnemiesProgression.PostPlantNightEnemies;
-                    }
-
-                    //get an random enemy from the pool
-                    int enemy = enemyPool[Main.rand.Next(enemyPool.Length - 1)];
-
-                    //spaw the enemy above the player
-                    int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(),
-                    (int)player.position.X + Main.rand.Next(-250, 250),
-                    (int)player.position.Y - Main.rand.Next(700, 1200),
-                    enemy);
                 }
             }
         }
