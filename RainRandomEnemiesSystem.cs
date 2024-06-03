@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace RainRandomEnemies
 {
@@ -16,7 +17,7 @@ namespace RainRandomEnemies
         int spawnDelay = 0;
         int spawnDelayMax = ffFunc.TimeToTick(1);
         int duration = 0;
-        int durationMax = ffFunc.TimeToTick(mins: Main.rand.Next(3, 8));
+        int durationMax = ffFunc.TimeToTick(secs: Main.rand.Next(3, 8));
 
         //what to do when it's time to enable the event
         void EnableRREevent()
@@ -68,6 +69,55 @@ namespace RainRandomEnemies
                     NetMessage.SendData(MessageID.WorldData);
                     Main.SyncRain();
                 }
+
+                //variable for storing all of the avaiable players
+                List<Player> avaiablePlayers = [];
+
+                //loop through each player
+                for (int i = 0; i < Main.player.Length; i++)
+                {
+                    //get the current player info
+                    Player current = Main.player[i];
+
+                    //if the current player active and not dead, then add it to the list
+                    if (current.active && !current.dead) avaiablePlayers.Add(current);
+                }
+
+                //if the avaiable player list is populated, and landed a 50% chace, then spawn in a random boss on them
+                if (avaiablePlayers.Count > 0 && Main.rand.Next(0, 1) == 0) 
+                {
+                    //get a random player in the list
+                    Player unluckyPlayer = avaiablePlayers[Main.rand.Next(avaiablePlayers.Count)];
+
+                    //set the variabe for checking if the current npc is a boss
+                    bool correctBoss = false;
+
+                    //start the loop for rerolling until the current npc is a boss
+                    while (!correctBoss)
+                    {
+                        //get a random npc including modded
+                        int enemy = Main.rand.Next(NPCLoader.NPCCount);
+
+                        //spawn in the enemy from the sky while getting the id from him
+                        int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(),
+                        (int)unluckyPlayer.position.X + Main.rand.Next(-250, 250),
+                        (int)unluckyPlayer.position.Y - Main.rand.Next(600, 900),
+                        enemy);
+
+                        //get the npc that just spawn in
+                        NPC npc = Main.npc[npcID];
+
+                        //check to see if the enemy is a boss and warn the player about it
+                        if (npc.boss)
+                        {
+                            correctBoss = true;
+                            ffFunc.Talk(Language.GetTextValue("Mods.RainRandomEnemies.StatusMessage.Spawn", 
+                                npc.FullName, unluckyPlayer.name), Color.Orange);
+                        }
+                        //despawn the npc since it isnt a boss
+                        else npc.active = false;
+                    }
+                }
             }
         }
 
@@ -85,7 +135,7 @@ namespace RainRandomEnemies
                     if (!player.ZoneDirtLayerHeight && !player.ZoneRockLayerHeight && !player.ZoneUnderworldHeight)
                     {
                         //get ready to get an enemy pool
-                        int[] enemyPool = null;
+                        //int[] enemyPool = null;
 
 
                         ////the start of the progression
@@ -116,14 +166,14 @@ namespace RainRandomEnemies
                         //}
 
                         ////get an random enemy from the pool
-                        //int enemy = enemyPool[Main.rand.Next(enemyPool.Length - 1)];
+                        //int enemy = enemyPool[Main.rand.Next(enemyPool.Length)];
 
                         bool correctEnemy = false;
 
                         while (!correctEnemy)
                         {
                             //get a random npc including modded
-                            int enemy = Main.rand.Next(NPCLoader.NPCCount - 1);
+                            int enemy = Main.rand.Next(NPCLoader.NPCCount);
 
                             ////get a random modded enemy only
                             //int enemy = Main.rand.Next(NPCID.Count, NPCLoader.NPCCount);
@@ -142,7 +192,7 @@ namespace RainRandomEnemies
                                 && !ffVar.MiniBosses.Contains(enemy))
                             {
                                 correctEnemy = true;
-                                ffFunc.Talk(npc.FullName + " has just spawn in", Color.Orange);
+                                //ffFunc.Talk(npc.FullName + " has just spawn in", Color.Orange);
                             }
                             else npc.active = false;
                         }

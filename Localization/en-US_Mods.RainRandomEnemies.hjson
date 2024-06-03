@@ -1,4 +1,5 @@
 StatusMessage: {
 	Start: It's currently raining enemies!
 	End: It stop raining enemies!
+	Spawn: Uh oh. {0} has decided to rain on {1}'s parade.
 }

@@ -445,6 +445,8 @@ namespace RainRandomEnemies
                 //Brodcast a message to everyone in the server
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(message), color);
             }
+
+            Console.WriteLine(message);
         }
 
         //function that will convert human time to terraria ticks
