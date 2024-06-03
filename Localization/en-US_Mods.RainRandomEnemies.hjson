@@ -3,3 +3,101 @@ StatusMessage: {
 	End: It stop raining enemies!
 	Spawn: Uh oh. {0} has decided to rain on {1}'s parade.
 }
+
+Configs: {
+	RREconfig: {
+		DisplayName: Rain Random Enemies Config
+
+		Headers: {
+			GeneralOptions: General Options
+			EndEventWithBossOptions: End Event With Boss Options
+			RainEnemiesOptions: Rain Enemies Options (Progression mode will override all of the these settings.)
+			EventTimersOptions: Event Timers Options
+		}
+
+		useProgessionMode: {
+			Label: Use Progession Mode?
+			Tooltip: This will limit the enemies that are avaiable throughout the progression.
+		}
+
+		eventControlRain: {
+			Label: Event Control Rain?
+			Tooltip: Should the event force rain during the event?
+		}
+
+		allowBossSpawnAtEnd: {
+			Label: Allow Boss Spawn At End?
+			Tooltip: Should a random boss to spawn at the end of the event?
+		}
+
+		BossSpawnPercent: {
+			Label: Boss Spawn Percent.
+			Tooltip: What should the percentage be for a random boss to spawn, if enabled.
+		}
+
+		allowEndEventWithKills: {
+			Label: Allow End Event With Kills?
+			Tooltip: Should the event be able to end via kill count?
+		}
+
+		killRequirement: {
+			Label: kill Requirement?
+			Tooltip: What should the kill requirement be for ending the event?
+		}
+
+		allowRainBoss: {
+			Label: Allow Rain Boss?
+			Tooltip: Should the event allow random bosses to rain down?
+		}
+
+		allowRainMiniBosses: {
+			Label: Allow Rain Mini Bosses?
+			Tooltip: Should the event allow random mini bosses to rain down?
+		}
+
+		allowRainTownNPC: {
+			Label: Allow Rain Town NPC?
+			Tooltip: Should the event allow random Town NPC to rain down?
+		}
+
+		allowRainCritters: {
+			Label: Allow Rain Critters?
+			Tooltip: Should the event allow random critters to rain down?
+		}
+
+		eventStartMin: {
+			Label: Rain Event Start Minimum
+			Tooltip: What should the minimum time be before randomly starting the event, in minutes?
+		}
+
+		eventStartMax: {
+			Label: Rain Event Start Maximum
+			Tooltip: What should the maximum time be before randomly starting the event, in minutes?
+		}
+
+		spawnDelayMin: {
+			Label: Enemies Spawn Delay Minimum
+			Tooltip: What should the minimum time be before randomly spawning in an enemy, in seconds?
+		}
+
+		spawnDelayMax: {
+			Label: spawn Delay Max
+			Tooltip: What should the maximum time be before randomly spawning in an enemy, in minutes?
+		}
+
+		durationMin: {
+			Label: Event Duration Minimum
+			Tooltip: What should the minimum time be for the duration of the event, in minutes?
+		}
+
+		durationMax: {
+			Label: Event Duration Maximum
+			Tooltip: What should the maximum time be for the duration of the event, in seconds?
+		}
+
+		allowModdedEnemies: {
+			Label: allow Modded Enemies
+			Tooltip: ""
+		}
+	}
+}
