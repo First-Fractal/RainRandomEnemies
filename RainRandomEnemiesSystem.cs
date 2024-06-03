@@ -13,11 +13,15 @@ namespace RainRandomEnemies
         //global values for controling the event
         int cooldown = 0;
         int cooldownMax = ffFunc.TimeToTick(secs: Main.rand.Next(10, 20));
-        bool RREevent = false;
+        public static bool RREevent = false;
         int spawnDelay = 0;
         int spawnDelayMax = ffFunc.TimeToTick(1);
         int duration = 0;
-        int durationMax = ffFunc.TimeToTick(secs: Main.rand.Next(3, 8));
+        int durationMax = ffFunc.TimeToTick(mins: Main.rand.Next(3, 8));
+        public static int killCount = 0;
+        public static int killCountMax = 10;
+        public static List<NPC> NPCTracker = new List<NPC>();
+
 
         //what to do when it's time to enable the event
         void EnableRREevent()
@@ -54,8 +58,13 @@ namespace RainRandomEnemies
                 //set the event to be on
                 RREevent = false;
 
+                //reset the values for tracking the kill count
+                NPCTracker.Clear();
+                killCount = 0;
+
                 //reset the cooldown and tell the player about the end of the event
-                durationMax = ffFunc.TimeToTick(secs: Main.rand.Next(3, 8));
+                duration = 0;
+                durationMax = ffFunc.TimeToTick(mins: Main.rand.Next(3, 8));
                 ffFunc.Talk(Language.GetTextValue("Mods.RainRandomEnemies.StatusMessage.End"), new Color(50, 255, 130));
 
                 //set the world to not be raining
@@ -83,8 +92,8 @@ namespace RainRandomEnemies
                     if (current.active && !current.dead) avaiablePlayers.Add(current);
                 }
 
-                //if the avaiable player list is populated, and landed a 50% chace, then spawn in a random boss on them
-                if (avaiablePlayers.Count > 0 && Main.rand.Next(0, 1) == 0) 
+                //if the avaiable player list is populated, and landed a 25% chace, then spawn in a random boss on them
+                if (avaiablePlayers.Count > 0 && Main.rand.Next(0, 4) == 0) 
                 {
                     //get a random player in the list
                     Player unluckyPlayer = avaiablePlayers[Main.rand.Next(avaiablePlayers.Count)];
@@ -192,7 +201,7 @@ namespace RainRandomEnemies
                                 && !ffVar.MiniBosses.Contains(enemy))
                             {
                                 correctEnemy = true;
-                                //ffFunc.Talk(npc.FullName + " has just spawn in", Color.Orange);
+                                NPCTracker.Add(npc);
                             }
                             else npc.active = false;
                         }
@@ -213,8 +222,14 @@ namespace RainRandomEnemies
                 }
                 else
                 {
+                    //spawn in a random enemy once it's off cooldown
                     ffFunc.CooldownSystem(ref spawnDelay, ref spawnDelayMax, SummonRandomEnemy);
+
+                    //end the event once the time's up
                     ffFunc.CooldownSystem(ref duration, ref durationMax, DisableRREevent);
+
+                    //end the event once it's above the kill count
+                    if (killCount > killCountMax) DisableRREevent();
                 }
             }
             base.PostUpdateEverything();
