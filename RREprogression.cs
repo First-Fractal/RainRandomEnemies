@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RainRandomEnemies
 {
-    internal class RainRandomEnemiesProgression
+    internal class RREprogression
     {
         public static int[] StartEnemies = ffVar.Slimes.normalSlimes.Concat(ffVar.Slimes.biomeSlimes).ToArray()
             .Concat(ffVar.Slimes.festiveSlimes).ToArray().Concat(ffVar.Skeleton.normalSkeletons).ToArray()
