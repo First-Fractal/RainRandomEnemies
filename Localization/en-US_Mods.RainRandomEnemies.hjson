@@ -17,7 +17,7 @@ Configs: {
 
 		useProgessionMode: {
 			Label: Use Progession Mode?
-			Tooltip: This will limit the enemies that are avaiable throughout the progression.
+			Tooltip: This will limit the enemies that are avaiable to the current progression.
 		}
 
 		eventControlRain: {
