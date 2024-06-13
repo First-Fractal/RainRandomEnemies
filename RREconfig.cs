@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Terraria;
 using Terraria.ModLoader.Config;
 
 namespace RainRandomEnemies
@@ -14,6 +15,9 @@ namespace RainRandomEnemies
 
         [DefaultValue(true)]
         public bool eventControlRain;
+
+        [DefaultListValue(true)]
+        public bool startAfterEoCBoss;
 
         [Header("EndEventWithBossOptions")]
         [DefaultValue(true)]
@@ -61,7 +65,21 @@ namespace RainRandomEnemies
 
         [DefaultValue(2)]
         public int durationMin;
-        [DefaultValue(20)]
+        [DefaultValue(8)]
         public int durationMax;
+
+
+        //update the max values after the config has been changed
+        public override void OnChanged()
+        {
+            RREsystem.cooldownMax = ffFunc.TimeToTick(mins: Main.rand.Next(Instance.eventStartMin,
+                Instance.eventStartMax));
+            RREsystem.spawnDelayMax = ffFunc.TimeToTick(secs: Main.rand.Next(Instance.spawnDelayMin,
+                Instance.spawnDelayMax));
+            RREsystem.durationMax = ffFunc.TimeToTick(mins: Main.rand.Next(Instance.durationMin,
+                Instance.durationMax));
+            RREsystem.killCountMax = Instance.killRequirement;
+            base.OnChanged();
+        }
     }
 }

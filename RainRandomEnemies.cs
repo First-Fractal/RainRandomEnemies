@@ -11,6 +11,5 @@ namespace RainRandomEnemies
 {
 	public class RainRandomEnemies : Mod
 	{
-
 	}
 }

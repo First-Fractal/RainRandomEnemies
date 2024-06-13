@@ -22,29 +22,40 @@ namespace RainRandomEnemies
         public static int killCountMax = 10;
         public static List<NPC> NPCTracker = new List<NPC>();
 
+        //disable the event after leaving the world
+        public override void OnWorldUnload()
+        {
+            RREcontrolEvent.DisableRREevent();
+            base.OnWorldUnload();
+        }
+
         public override void PostUpdateEverything()
         {
-            //update the kill count max
-            killCountMax = RREconfig.Instance.killRequirement;
-
             //make it only active on non multiplayer clients
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                //do the cooldown while the event is not active
-                if (!RREevent)
-                {
-                    ffFunc.CooldownSystem(ref cooldown, ref cooldownMax, RREcontrolEvent.EnableRREevent);
-                }
-                else
-                {
-                    //spawn in a random enemy once it's off cooldown
-                    ffFunc.CooldownSystem(ref spawnDelay, ref spawnDelayMax, RREcontrolEvent.SummonRandomEnemy);
+                //system to make the event start after the EoC has been defeated
+                bool allowEvent = true;
+                if (RREconfig.Instance.startAfterEoCBoss && !NPC.downedBoss1) allowEvent = false;
 
-                    //end the event once the time's up
-                    ffFunc.CooldownSystem(ref duration, ref durationMax, RREcontrolEvent.DisableRREevent);
+                if (allowEvent)
+                {
+                    //do the cooldown while the event is not active
+                    if (!RREevent)
+                    {
+                        ffFunc.CooldownSystem(ref cooldown, ref cooldownMax, RREcontrolEvent.EnableRREevent);
+                    }
+                    else
+                    {
+                        //spawn in a random enemy once it's off cooldown
+                        ffFunc.CooldownSystem(ref spawnDelay, ref spawnDelayMax, RREcontrolEvent.SummonRandomEnemy);
 
-                    //end the event once it's above the kill count and it's allowed
-                    if (RREconfig.Instance.allowEndEventWithKills && killCount > killCountMax) RREcontrolEvent.DisableRREevent();
+                        //end the event once the time's up
+                        ffFunc.CooldownSystem(ref duration, ref durationMax, RREcontrolEvent.DisableRREevent);
+
+                        //end the event once it's above the kill count and it's allowed
+                        if (RREconfig.Instance.allowEndEventWithKills && killCount > killCountMax) RREcontrolEvent.DisableRREevent();
+                    }
                 }
             }
             base.PostUpdateEverything();

@@ -97,7 +97,12 @@ Configs: {
 
 		allowModdedEnemies: {
 			Label: allow Modded Enemies
-			Tooltip: ""
+			Tooltip: Allow modded enemies to rain down
+		}
+
+		startAfterEoCBoss: {
+			Label: Start After EoC Defeated
+			Tooltip: Start the event after killing the Eye of Cthulhu
 		}
 	}
 }
