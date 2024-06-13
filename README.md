@@ -11,3 +11,8 @@ Credit to u/smoldootdootart on reddit for the dice in the icon: https://www.redd
 
 # Steam Workshop
 [Download it here](https://steamcommunity.com/sharedfiles/filedetails/?id=2952321754)
+
+# Change Log
+v 1.1: Fixed a bug with reloading the config not changing the values, fixed a bug where the event would not stop and transfer between worlds. Also added in a new config option that would start the countdown for event after EoC
+<br>
+v 1.0: Relased the mod.

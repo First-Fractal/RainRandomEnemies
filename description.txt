@@ -5,3 +5,8 @@ Alternatively, you can enable progression mode where the random enemies will onl
 
 Everything in this mod is configurable to your needs.
 Credit to u/smoldootdootart on reddit for the dice in the icon: https://www.reddit.com/r/PixelArt/comments/i3rh9w/dice/
+
+Change Log
+------------------------------
+v 1.1: Fixed a bug with reloading the config not changing the values, fixed a bug where the event would not stop and transfer between worlds. Also added in a new config option that would start the countdown for event after EoC
+v 1.0: Relased the mod.
