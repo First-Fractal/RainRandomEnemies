@@ -191,64 +191,66 @@ namespace RainRandomEnemies
 
                             //get an random enemy from the pool
                             enemy = enemyPool[Main.rand.Next(enemyPool.Length)];
-                        }
-
-                        bool correctEnemy = false;
-
-                        while (!correctEnemy)
+                        } else
                         {
-                            //get a random npc including modded
-                            enemy = Main.rand.Next(NPCLoader.NPCCount);
+                            bool correctEnemy = false;
 
-                            ////get a random modded enemy only
-                            //int enemy = Main.rand.Next(NPCID.Count, NPCLoader.NPCCount);
-
-                            //spawn in the enemy top left of the world while getting the id from him
-                            int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), 0, 0, enemy);
-
-                            //get the npc that just spawn in
-                            NPC npc = Main.npc[npcID];
-
-                            if (RREconfig.Instance.allowRainBoss && npc.boss)
+                            while (!correctEnemy)
                             {
-                                correctEnemy = true;
-                                RREsystem.NPCTracker.Add(npc);
-                                npc.active = false;
-                                break;
-                            }
+                                //get a random npc including modded
+                                enemy = Main.rand.Next(NPCLoader.NPCCount);
 
-                            if (RREconfig.Instance.allowRainMiniBosses && ffVar.MiniBosses.Contains(enemy))
-                            {
-                                correctEnemy = true;
-                                RREsystem.NPCTracker.Add(npc);
-                                npc.active = false;
-                                break;
-                            }
+                                ////get a random modded enemy only
+                                //int enemy = Main.rand.Next(NPCID.Count, NPCLoader.NPCCount);
 
-                            if (RREconfig.Instance.allowRainTownNPC && npc.isLikeATownNPC)
-                            {
-                                correctEnemy = true;
-                                RREsystem.NPCTracker.Add(npc);
-                                npc.active = false;
-                                break;
-                            }
+                                //spawn in the enemy top left of the world while getting the id from him
+                                int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), 0, 0, enemy);
 
-                            if (RREconfig.Instance.allowRainCritters && npc.CountsAsACritter)
-                            {
-                                correctEnemy = true;
-                                RREsystem.NPCTracker.Add(npc);
-                                npc.active = false;
-                                break;
-                            }
+                                //get the npc that just spawn in
+                                NPC npc = Main.npc[npcID];
 
-                            //check to see if the enemy isnt a boss, miniboss, critter, or a town npc, or else restart the loop
-                            if (!npc.boss && !npc.isLikeATownNPC && !npc.CountsAsACritter && !ffVar.BossParts.Contains(enemy)
-                                && !ffVar.MiniBosses.Contains(enemy))
-                            {
-                                correctEnemy = true;
-                                RREsystem.NPCTracker.Add(npc);
+                                if (RREconfig.Instance.allowRainBoss && npc.boss)
+                                {
+                                    correctEnemy = true;
+                                    RREsystem.NPCTracker.Add(npc);
+                                    npc.active = false;
+                                    break;
+                                }
+
+                                if (RREconfig.Instance.allowRainMiniBosses && ffVar.MiniBosses.Contains(enemy))
+                                {
+                                    correctEnemy = true;
+                                    RREsystem.NPCTracker.Add(npc);
+                                    npc.active = false;
+                                    break;
+                                }
+
+                                if (RREconfig.Instance.allowRainTownNPC && npc.isLikeATownNPC)
+                                {
+                                    correctEnemy = true;
+                                    RREsystem.NPCTracker.Add(npc);
+                                    npc.active = false;
+                                    break;
+                                }
+
+                                if (RREconfig.Instance.allowRainCritters && npc.CountsAsACritter)
+                                {
+                                    correctEnemy = true;
+                                    RREsystem.NPCTracker.Add(npc);
+                                    npc.active = false;
+                                    break;
+                                }
+
+                                //check to see if the enemy isnt a boss, miniboss, critter, or a town npc, or else restart the loop
+                                if (!npc.boss && !npc.isLikeATownNPC && !npc.CountsAsACritter && !ffVar.BossParts.Contains(enemy)
+                                    && !ffVar.MiniBosses.Contains(enemy))
+                                {
+                                    correctEnemy = true;
+                                    RREsystem.NPCTracker.Add(npc);
+                                }
                             }
                         }
+
 
                         //spawn in the enemy from the sky
                         NPC.NewNPC(NPC.GetSource_NaturalSpawn(),
