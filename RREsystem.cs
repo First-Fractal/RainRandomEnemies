@@ -22,6 +22,9 @@ namespace RainRandomEnemies
         public static int killCountMax = 10;
         public static List<NPC> NPCTracker = new List<NPC>();
 
+        //define a static instance for the mod to use
+        public static RREsystem Instance;
+
         //disable the event after leaving the world
         public override void OnWorldUnload()
         {

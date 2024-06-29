@@ -5,6 +5,7 @@ using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System.Linq;
 using System;
+using System.Threading;
 
 //this is my own libary that I use to store snipits. I don't want it to be it's own mod, so I'll use copy and paste this file when needed.
 namespace RainRandomEnemies
@@ -456,10 +457,29 @@ namespace RainRandomEnemies
             int sec = 60;
             int min = sec * 60;
             int hour = min * 60;
-            int day = hours * 24;
+            int day = hour * 24;
 
             //multiply the units and combine the final time
             return (sec * secs) + (min * mins) + (hour * hours) + (day * days);
+        }
+
+        //function that will convert terraria ticks to human time
+        public static int TicksToTime(int ticks, bool secs = false, bool mins = false, bool hours = false, bool days = false)
+        {
+            // Define the units
+            const int sec = 60;
+            const int min = sec * 60;
+            const int hour = min * 60;
+            const int day = hour * 24;
+
+            //divide the ticks by unit and return it
+            if (days) return ticks / day;
+            if (hours) return ticks / hour;
+            if (mins) return ticks / min;
+            if (secs) return ticks / sec;
+
+            //return this incase no units were provided
+            return 0;
         }
 
         //function for checking if a boss is currently alive
@@ -519,7 +539,7 @@ namespace RainRandomEnemies
             if (IsPlayerInWorld(alive))
             {
                 //if the cooldown isnt above the cooldown max, then count up
-                if (cooldown < cooldownMax)
+                if (cooldown <= cooldownMax)
                 {
                     cooldown++;
                 }

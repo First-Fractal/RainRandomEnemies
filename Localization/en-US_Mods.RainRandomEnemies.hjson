@@ -4,6 +4,16 @@ StatusMessage: {
 	Spawn: Uh oh. {0} has decided to rain on {1}'s parade.
 }
 
+Command: {
+	Desc: Provides info about the Rain Random Enemeis event.
+	Duration:
+		'''
+		Time left until the event ends: {0}/{1}
+		Kills left: {2}/{3}
+		'''
+	Cooldown: Time left until the event starts: {0}/{1}
+}
+
 Configs: {
 	RREconfig: {
 		DisplayName: Rain Random Enemies Config
