@@ -6,11 +6,8 @@ StatusMessage: {
 
 Command: {
 	Desc: Provides info about the Rain Random Enemeis event.
-	Duration:
-		'''
-		Time left until the event ends: {0}/{1}
-		Kills left: {2}/{3}
-		'''
+	Duration: Time left until the event ends: {0}/{1}
+	KillCount: Kills left: {0}/{1}
 	Cooldown: Time left until the event starts: {0}/{1}
 }
 
@@ -21,6 +18,7 @@ Configs: {
 		Headers: {
 			GeneralOptions: General Options
 			EndEventWithBossOptions: End Event With Boss Options
+			EndEventKillCountOptions: End Event Via Kill Count
 			RainEnemiesOptions: Rain Enemies Options (Progression mode will override all of the these settings.)
 			EventTimersOptions: Event Timers Options
 		}

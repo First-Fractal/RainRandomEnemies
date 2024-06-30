@@ -62,19 +62,22 @@ namespace RainRandomEnemies
                 }
             }
 
+            //send the packets to all of the players in multiplayer
             if (Main.netMode != NetmodeID.SinglePlayer)
             {
+                //get a packet
                 ModPacket packet = ModContent.GetInstance<RainRandomEnemies>().GetPacket();
+
+                //write down all of the current ales
                 packet.Write(cooldown);
                 packet.Write(cooldownMax);
-
                 packet.Write(RREevent);
-
                 packet.Write(duration);
                 packet.Write(durationMax);
-
                 packet.Write(killCount);
                 packet.Write(killCountMax);
+
+                //send the packet
                 packet.Send();
             }
             base.PostUpdateEverything();

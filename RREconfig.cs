@@ -28,16 +28,16 @@ namespace RainRandomEnemies
         [Slider()]
         public int BossSpawnPercent;
 
-
-        [Header("RainEnemiesOptions")]
+        [Header("EndEventKillCountOptions")]
         [DefaultValue(true)]
         public bool allowEndEventWithKills;
 
-        [DefaultValue(true)]
-        public bool allowModdedEnemies;
-
         [DefaultValue(30)]
         public int killRequirement;
+
+        [Header("RainEnemiesOptions")]
+        [DefaultValue(true)]
+        public bool allowModdedEnemies;
 
         [DefaultValue(false)]
         public bool allowRainBoss;

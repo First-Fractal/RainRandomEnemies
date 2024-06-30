@@ -20,23 +20,22 @@ namespace RainRandomEnemies
         //what the command does when it's run
         public override void Action(CommandCaller caller, string input, string[] args)
         {
+            //get the message and the local player
             string message;
-
             RREPlayer player = Main.LocalPlayer.GetModPlayer<RREPlayer>();
 
+            //define all of the values needed for the command 
             bool RREevent;
-
             string durationHuman;
             string durationMaxHuman;
-
             string cooldownHuman;
             string cooldownMaxHuman;
-
             int killCount;
             int killCountMax;
 
+            //if in the game is singeplayer, then get the value directly from the RRE system
             if (Main.netMode == NetmodeID.SinglePlayer) {
-                
+                //get if the event is currently going on
                 RREevent = RREsystem.RREevent;
 
                 //get the human time for the duration of the event
@@ -47,10 +46,12 @@ namespace RainRandomEnemies
                 cooldownHuman = ffFunc.TicksToTime(RREsystem.cooldown, mins: true).ToString();
                 cooldownMaxHuman = ffFunc.TicksToTime(RREsystem.cooldownMax, mins: true).ToString() + " mins";
 
+                //get the kill count
                 killCount = RREsystem.killCount;
                 killCountMax = RREsystem.killCountMax;
             } else
             {
+                //get if the event is currently going on
                 RREevent = player.RREevent;
 
                 //get the human time for the duration of the event
@@ -61,14 +62,22 @@ namespace RainRandomEnemies
                 cooldownHuman = ffFunc.TicksToTime(player.cooldown, mins: true).ToString();
                 cooldownMaxHuman = ffFunc.TicksToTime(player.cooldownMax, mins: true).ToString() + " mins";
 
+                //get the kill count
                 killCount = player.killCount;
                 killCountMax = player.killCountMax;
             }
 
+            //check if the event is currently going on
             if (RREevent)
             {
                 //make the message for when the event is going to end
-                message = Language.GetTextValue("Mods.RainRandomEnemies.Command.Duration", durationHuman, durationMaxHuman, killCount, killCountMax);
+                message = Language.GetTextValue("Mods.RainRandomEnemies.Command.Duration", durationHuman, durationMaxHuman);
+
+                //if the event is allowed to end with kills, then update the message
+                if (RREconfig.Instance.allowEndEventWithKills)
+                {
+                    message += "\n" + Language.GetTextValue("Mods.RainRandomEnemies.Command.KillCount", killCount, killCountMax);
+                }
             } else
             {
                 //make the message for when the event is going to start
