@@ -200,9 +200,6 @@ namespace RainRandomEnemies
                                 //get a random npc including modded
                                 enemy = Main.rand.Next(NPCLoader.NPCCount);
 
-                                ////get a random modded enemy only
-                                //int enemy = Main.rand.Next(NPCID.Count, NPCLoader.NPCCount);
-
                                 //spawn in the enemy top left of the world while getting the id from him
                                 int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), 0, 0, enemy);
 
@@ -212,7 +209,6 @@ namespace RainRandomEnemies
                                 if (RREconfig.Instance.allowRainBoss && npc.boss)
                                 {
                                     correctEnemy = true;
-                                    RREsystem.NPCTracker.Add(npc);
                                     npc.active = false;
                                     break;
                                 }
@@ -220,7 +216,6 @@ namespace RainRandomEnemies
                                 if (RREconfig.Instance.allowRainMiniBosses && ffVar.MiniBosses.Contains(enemy))
                                 {
                                     correctEnemy = true;
-                                    RREsystem.NPCTracker.Add(npc);
                                     npc.active = false;
                                     break;
                                 }
@@ -228,7 +223,6 @@ namespace RainRandomEnemies
                                 if (RREconfig.Instance.allowRainTownNPC && npc.isLikeATownNPC)
                                 {
                                     correctEnemy = true;
-                                    RREsystem.NPCTracker.Add(npc);
                                     npc.active = false;
                                     break;
                                 }
@@ -236,7 +230,6 @@ namespace RainRandomEnemies
                                 if (RREconfig.Instance.allowRainCritters && npc.CountsAsACritter)
                                 {
                                     correctEnemy = true;
-                                    RREsystem.NPCTracker.Add(npc);
                                     npc.active = false;
                                     break;
                                 }
@@ -246,17 +239,15 @@ namespace RainRandomEnemies
                                     && !ffVar.MiniBosses.Contains(enemy))
                                 {
                                     correctEnemy = true;
-                                    RREsystem.NPCTracker.Add(npc);
                                 }
                             }
                         }
 
-
                         //spawn in the enemy from the sky
-                        NPC.NewNPC(NPC.GetSource_NaturalSpawn(),
-                        (int)player.position.X + Main.rand.Next(-250, 250),
-                        (int)player.position.Y - Main.rand.Next(600, 900),
-                        enemy);
+                        NPC enemyNPC = NPC.NewNPCDirect(NPC.GetSource_NaturalSpawn(), (int)player.position.X + Main.rand.Next(-250, 250), (int)player.position.Y - Main.rand.Next(600, 900), enemy);
+
+                        //add them to the list
+                        RREsystem.NPCTracker.Add(enemyNPC);
                     }
                 }
             }
