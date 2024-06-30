@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -23,25 +20,57 @@ namespace RainRandomEnemies
         //what the command does when it's run
         public override void Action(CommandCaller caller, string input, string[] args)
         {
-            // the message string
-            string message = "";
+            string message;
 
-            //check if the event is going on
-            if (RREsystem.RREevent)
-            {
+            RREPlayer player = Main.LocalPlayer.GetModPlayer<RREPlayer>();
+
+            bool RREevent;
+
+            string durationHuman;
+            string durationMaxHuman;
+
+            string cooldownHuman;
+            string cooldownMaxHuman;
+
+            int killCount;
+            int killCountMax;
+
+            if (Main.netMode == NetmodeID.SinglePlayer) {
+                
+                RREevent = RREsystem.RREevent;
+
                 //get the human time for the duration of the event
-                string durationHuman = ffFunc.TicksToTime(RREsystem.duration, mins: true).ToString();
-                string durationMaxHuman = ffFunc.TicksToTime(RREsystem.durationMax, mins: true).ToString() + " mins";
+                durationHuman = ffFunc.TicksToTime(RREsystem.duration, mins: true).ToString();
+                durationMaxHuman = ffFunc.TicksToTime(RREsystem.durationMax, mins: true).ToString() + " mins";
 
-                //make the message for when the event is going to end
-                message = Language.GetTextValue("Mods.RainRandomEnemies.Command.Duration", durationHuman, durationMaxHuman, RREsystem.killCount, RREsystem.killCountMax);
-            }
-            else
-            {
                 //get the human time for the cooldown of the event
-                string cooldownHuman = ffFunc.TicksToTime(RREsystem.cooldown, mins: true).ToString();
-                string cooldownMaxHuman = ffFunc.TicksToTime(RREsystem.cooldownMax, mins: true).ToString() + " mins";
+                cooldownHuman = ffFunc.TicksToTime(RREsystem.cooldown, mins: true).ToString();
+                cooldownMaxHuman = ffFunc.TicksToTime(RREsystem.cooldownMax, mins: true).ToString() + " mins";
 
+                killCount = RREsystem.killCount;
+                killCountMax = RREsystem.killCountMax;
+            } else
+            {
+                RREevent = player.RREevent;
+
+                //get the human time for the duration of the event
+                durationHuman = ffFunc.TicksToTime(player.duration, mins: true).ToString();
+                durationMaxHuman = ffFunc.TicksToTime(player.durationMax, mins: true).ToString() + " mins";
+
+                //get the human time for the cooldown of the event
+                cooldownHuman = ffFunc.TicksToTime(player.cooldown, mins: true).ToString();
+                cooldownMaxHuman = ffFunc.TicksToTime(player.cooldownMax, mins: true).ToString() + " mins";
+
+                killCount = player.killCount;
+                killCountMax = player.killCountMax;
+            }
+
+            if (RREevent)
+            {
+                //make the message for when the event is going to end
+                message = Language.GetTextValue("Mods.RainRandomEnemies.Command.Duration", durationHuman, durationMaxHuman, killCount, killCountMax);
+            } else
+            {
                 //make the message for when the event is going to start
                 message = Language.GetTextValue("Mods.RainRandomEnemies.Command.Cooldown", cooldownHuman, cooldownMaxHuman);
             }

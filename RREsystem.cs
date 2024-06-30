@@ -61,6 +61,22 @@ namespace RainRandomEnemies
                     }
                 }
             }
+
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = ModContent.GetInstance<RainRandomEnemies>().GetPacket();
+                packet.Write(cooldown);
+                packet.Write(cooldownMax);
+
+                packet.Write(RREevent);
+
+                packet.Write(duration);
+                packet.Write(durationMax);
+
+                packet.Write(killCount);
+                packet.Write(killCountMax);
+                packet.Send();
+            }
             base.PostUpdateEverything();
         }
     }
